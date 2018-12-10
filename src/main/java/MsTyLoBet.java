@@ -103,7 +103,7 @@ public class MsTyLoBet {
                     continue;
                 }
                 this.getMatchList(matchesStr);
-                int random =  RandomUtils.getRandom5000to9999();
+               // int random =  RandomUtils.getRandom5000to9999();
                 logger.info("================轮询结束 sleep =================="+rollTime+"毫秒");
                 // Thread.sleep(random*7);
                 Thread.sleep(rollTime);
@@ -131,9 +131,14 @@ public class MsTyLoBet {
 
         method.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         method.setRequestHeader("Cookie",prop.getString("Cookie"));
-        method.setRequestHeader("Host", "nss.m88ms.com");
+/*        method.setRequestHeader("Host", "nss.m88ms.com");
         method.setRequestHeader("Origin", "https://nss.m88ms.com");
-        method.setRequestHeader("Referer", "https://nss.m88ms.com/nss/tabmenu.aspx?lid=zh-CN");
+        method.setRequestHeader("Referer", "https://nss.m88ms.com/nss/tabmenu.aspx?lid=zh-CN");*/
+
+        method.setRequestHeader("Host", "www.ms88kr.com");
+        method.setRequestHeader("Origin", "https://www.ms88kr.com");
+        method.setRequestHeader("Referer", "https://www.ms88kr.com/Main/Sports/mSports/nss/tabmenu.aspx?lid=zh-CN");
+
         method.setRequestHeader("Upgrade-Insecure-Requests", "1");
         method.setRequestHeader("User-Agent", Agent);
 
@@ -225,9 +230,15 @@ public class MsTyLoBet {
         method.setRequestHeader("Content-Length", "81");
         method.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         method.setRequestHeader("Cookie",prop.getString("Cookie"));
-        method.setRequestHeader("Host", "nss.m88ms.com");
+
+/*        method.setRequestHeader("Host", "nss.m88ms.com");
         method.setRequestHeader("Origin", "https://nss.m88ms.com");
-        method.setRequestHeader("Referer", "https://nss.m88ms.com/nss/tabmenu.aspx?lid=zh-CN");
+        method.setRequestHeader("Referer", "https://nss.m88ms.com/nss/tabmenu.aspx?lid=zh-CN");*/
+
+        method.setRequestHeader("Host", "www.ms88kr.com");
+        method.setRequestHeader("Origin", "https://www.ms88kr.com");
+        method.setRequestHeader("Referer", "https://www.ms88kr.com/Main/Sports/mSports/nss/tabmenu.aspx?lid=zh-CN");
+
         method.setRequestHeader("Upgrade-Insecure-Requests", "1");
         method.setRequestHeader("User-Agent",Agent);
 
@@ -304,8 +315,14 @@ public class MsTyLoBet {
         listPostMethod.setRequestHeader("Content-Length", "115");
         listPostMethod.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         listPostMethod.setRequestHeader("Cookie",prop.getString("Cookie"));
-        listPostMethod.setRequestHeader("Host", "nss.m88ms.com");
-        listPostMethod.setRequestHeader("Origin", "https://nss.m88ms.com");
+
+/*        listPostMethod.setRequestHeader("Host", "nss.m88ms.com");
+        listPostMethod.setRequestHeader("Origin", "https://nss.m88ms.com");*/
+
+        listPostMethod.setRequestHeader("Host", "www.ms88kr.com");
+        listPostMethod.setRequestHeader("Origin", "https://www.ms88kr.com");
+
+
         /*if("all".equalsIgnoreCase(prop.getString("Language"))){
             if("en".equalsIgnoreCase(saveLanguage)){
                 listPostMethod.setRequestHeader("Referer", "https://nss.m88ms.com/nss/main2.aspx?lid=en-US&spid=10&spname=Soccer&dt=2");
@@ -319,7 +336,10 @@ public class MsTyLoBet {
         }else{
             listPostMethod.setRequestHeader("Referer", "https://nss.m88ms.com/nss/main2.aspx?lid=zh-CN&spid=10&spname=Soccer&dt=2");
         }*/
-        listPostMethod.setRequestHeader("Referer", "https://nss.m88ms.com/nss/main2.aspx?lid=zh-CN&spid=10&spname=Soccer&dt=2");
+        //listPostMethod.setRequestHeader("Referer", "https://nss.m88ms.com/nss/main2.aspx?lid=zh-CN&spid=10&spname=Soccer&dt=2");
+
+        listPostMethod.setRequestHeader("Referer", "https://www.ms88kr.com/Main/Sports/mSports/nss/main2.aspx?lid=zh-CN&spid=10&spname=Soccer&dt=2");
+
         listPostMethod.setRequestHeader("Upgrade-Insecure-Requests", "1");
         listPostMethod.setRequestHeader("User-Agent", Agent);
 
@@ -687,7 +707,7 @@ public class MsTyLoBet {
 
                         logger.info("| "+prevMsTyMatch.getMatchNo()+" |secondPre："+secondPre+"|baseBetOdds:"+baseBetOdds+"|oldBetOdds:"+oldBetOdds+"|betOdds:"+betOdds);
 
-                        if((secondPre>=2.5 && prevMsTyMatch.getMatchStep() == 1 && prevMsTyMatch.getMatchTime()>= (NumberUtils.toInt(prop.getString("InStartTime"),20) - 8 )&& betOdds>=baseBetOdds && betOdds>=oldBetOdds)
+                      /*  if((secondPre>=2.5 && prevMsTyMatch.getMatchStep() == 1 && prevMsTyMatch.getMatchTime()>= (NumberUtils.toInt(prop.getString("InStartTime"),20) - 8 )&& betOdds>=baseBetOdds && betOdds>=oldBetOdds)
                                 ||(secondPre>=2.5 && prevMsTyMatch.getMatchStep() == 3 && prevMsTyMatch.getMatchTime()>= (NumberUtils.toInt(prop.getString("SecInStartTime"),20) - 8 ) && betOdds>=baseBetOdds && betOdds>=oldBetOdds)){
 
                             logger.info("优势secondPre,可提前投注secondPre|prevMsTyMatch:"+secondPre+"|"+prevMsTyMatch.getMatchNo());
@@ -697,29 +717,21 @@ public class MsTyLoBet {
 
                             logger.info("优势secondPre,可提前投注secondPre|prevMsTyMatch:"+secondPre+"|"+prevMsTyMatch.getMatchNo());
 
-                        }else if((prevMsTyMatch.getMatchStep() == 1 && prevMsTyMatch.getMatchTime()<NumberUtils.toInt(prop.getString("InStartTime"),20))
+                        }else */
+
+
+
+                        if((prevMsTyMatch.getMatchStep() == 1 && prevMsTyMatch.getMatchTime()<NumberUtils.toInt(prop.getString("InStartTime"),20))
                                 ||(prevMsTyMatch.getMatchStep() == 3 && prevMsTyMatch.getMatchTime()<NumberUtils.toInt(prop.getString("SecInStartTime"),20))){
 
-                            prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                            prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
-                            msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                            msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                            MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
                             logger.info("比赛时间不足,更新数据不投注prevMsTyMatch"+prevMsTyMatch);
-                            prevMsTyMatch = msTyMatch;
+                            this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                             continue;
                         }
 
                     if(MatchDataUtils.validateMatchData(prevMsTyMatch.getMatchData(),5)==false){
-                        prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                        prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
-                        msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                        msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                        MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
                         logger.info("比赛数据过少,更新数据不投注prevMsTyMatch"+prevMsTyMatch);
-                        prevMsTyMatch = msTyMatch;
+                        this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                         continue;
                     }
 
@@ -729,13 +741,7 @@ public class MsTyLoBet {
                     //logger.info("prevMsTyMatch设置baseData："+baseData+"|"+prevMsTyMatch.toString());
                     if(baseData == null){
                         logger.info("baseData为空更新数据不投注："+baseData+"|"+prevMsTyMatch.toString());
-                        prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                        prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
-                        msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                        msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                        MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
-                        prevMsTyMatch = msTyMatch;
+                        this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                         continue;
                     }
 
@@ -914,14 +920,8 @@ public class MsTyLoBet {
                                 ){
                             logger.info("only second,shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+"|"+prevMsTyMatch.getMatchNo());
                         }else{
-                            prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                            prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
-                            msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                            msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                            MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
                             logger.info("不满足投注条件,更新数据!prevMsTyMatch"+prevMsTyMatch);
-                            prevMsTyMatch = msTyMatch;
+                            this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                             continue;
                       }
                     }else if(NumberUtils.toInt(prop.getString("policy"),1)==2){
@@ -935,15 +935,9 @@ public class MsTyLoBet {
                                 ){
                             logger.info("only second,shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+"|"+prevMsTyMatch.getMatchNo());
                         }else{
-                            prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                            prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
-                            msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                            msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                            MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
-                            logger.info("不满足投注条件,更新数据!prevMsTyMatch"+prevMsTyMatch);
-                            prevMsTyMatch = msTyMatch;
-                            continue;
+                           logger.info("不满足投注条件,更新数据!prevMsTyMatch"+prevMsTyMatch);
+                           this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
+                           continue;
                         }
                     }else {
                         if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
@@ -966,14 +960,8 @@ public class MsTyLoBet {
                                 ){
                             logger.info("策略3,1.5倍定律,射门上升,开始投注..."+ prevMsTyMatch.getMasterTeamName()+"|"+prevMsTyMatch.getMatchNo());
                         }else{
-                            prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                            prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
-                            msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                            msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                            MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
                             logger.info("不满足投注条件,更新数据!prevMsTyMatch"+prevMsTyMatch);
-                            prevMsTyMatch = msTyMatch;
+                            this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                             continue;
                         }
                     }
@@ -1011,13 +999,7 @@ public class MsTyLoBet {
                         logger.info("投注余额小于10，更新数据不投注:" + prevMsTyMatch.getMasterTeamName() + " | " + prevMsTyMatch.getMatchNo() +" | prevMsTyMatch.getBetMoney(): " + prevMsTyMatch.getBetMoney()
                                 +" | maxMoneyProp:"+maxMoneyProp+" | betMoney_finish:"+betMoney_finish);
 
-                        prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                        prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
-                        msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                        msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                        MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
-                        prevMsTyMatch = msTyMatch;
+                        this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                         continue;
 
                     }
@@ -1158,17 +1140,9 @@ public class MsTyLoBet {
 
                                 if(isContinue){
                                     //更新数据
-                                    prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
-                                    prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
-
                                     prevMsTyMatch.setBetMoney(zbBetMoney-betMoneySur);
-
-                                    msTyMatches.remove(prevMsTyMatch.getMatchNo());
-                                    msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
-                                    MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
+                                    this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                                     logger.info("| "+prevMsTyMatch.getMatchNo()+" |分额投注 部分投注成功，更新数据!prevMsTyMatch"+prevMsTyMatch);
-
-                                    prevMsTyMatch = msTyMatch;
                                     continue;
                                 }else {
                                     if(MatchDataUtils.parseBetResultCode(betResult)==401||MatchDataUtils.parseBetResultCode(betResult)==0){
@@ -1418,6 +1392,18 @@ public class MsTyLoBet {
 
         return rs;
     }
+
+    private void updataMsTyMatch( MsTyMatch oldMsTyMatch,MsTyMatch msTyMatch){
+        prevMsTyMatch.setBaseMatchData(oldMsTyMatch.getMatchData());
+        prevMsTyMatch.setBaseOdds(oldMsTyMatch.getBaseOdds());
+
+        msTyMatches.remove(prevMsTyMatch.getMatchNo());
+        msTyMatches.put(prevMsTyMatch.getMatchNo(),prevMsTyMatch);
+        MsTyMatchDao.getInstance().insertMsTyMatch(prevMsTyMatch);
+        prevMsTyMatch = msTyMatch;
+    }
+
+
 
 
 }
