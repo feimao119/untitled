@@ -108,7 +108,8 @@ public class MatchDataUtils {
 //        logger.info(StringUtils.substringAfterLast(StringUtils.substringBefore(matchDataAllStr,"["+teamId),"],["));
 //        logger.info(StringUtils.substringBefore(StringUtils.substringAfterLast(StringUtils.substringBefore(matchDataAllStr,"["+teamId),"],["),","));
         String tmpstr =  StringUtils.substringBefore(matchDataAllStr,"["+sa[0]);
-
+      //  logger.info("tmpstr:"+tmpstr);
+      //  logger.info("(tmpstr.substring(tmpstr.length()-2):"+(tmpstr.substring(tmpstr.length()-2)));
         String reverse;
         if((tmpstr.substring(tmpstr.length()-2).equals("],")&&sa[1].equals("2"))
                 || !tmpstr.substring(tmpstr.length()-2).equals("],")&&sa[1].equals("1")){
@@ -117,10 +118,23 @@ public class MatchDataUtils {
             reverse = "y";
         }
 
+        String ranking;
+        if((tmpstr.substring(tmpstr.length()-2).equals("],"))){
+            String r1 = StringUtils.substringBefore(StringUtils.substringAfterLast(tmpstr,",\""),"\",");
+            String r2 = StringUtils.substringBefore(StringUtils.substringAfter(matchDataAllStr,"["+sa[0]+",\""),"\",");
+
+            ranking = (StringUtils.isBlank(r1)?"0":r1)+"_"+ (StringUtils.isBlank(r2)?"0":r2);
+        }else{
+            String r1 = StringUtils.substringBefore(StringUtils.substringAfter(matchDataAllStr,"["+sa[0]+",\""),"\",");
+            String r2 = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(StringUtils.substringAfter(matchDataAllStr,"["+sa[0]),"],["),",\""),"\",");
+
+            ranking = (StringUtils.isBlank(r1)?"0":r1)+"_"+ (StringUtils.isBlank(r2)?"0":r2);
+        }
+
         if(StringUtils.indexOf(tmpstr,"],[")==-1){
-            return StringUtils.substringBefore(StringUtils.substringAfterLast(tmpstr,"[["),",")+"_"+reverse;
+            return StringUtils.substringBefore(StringUtils.substringAfterLast(tmpstr,"[["),",")+"_"+reverse+"_"+ranking;
         }else {
-            return StringUtils.substringBefore(StringUtils.substringAfterLast(tmpstr,"],["),",")+"_"+reverse;
+            return StringUtils.substringBefore(StringUtils.substringAfterLast(tmpstr,"],["),",")+"_"+reverse+"_"+ranking;
         }
     }
 
@@ -158,9 +172,9 @@ public class MatchDataUtils {
         }
 
         if("y".equals(leisuMatchArr[1])){
-            return gshoot+":"+mshoot+"_"+ gshootz+":"+mshootz+"_"+ gBallPoss+":"+mBallPoss;
+            return gshoot+":"+mshoot+"_"+ gshootz+":"+mshootz+"_"+ gBallPoss+":"+mBallPoss+"_"+leisuMatchArr[3]+":"+leisuMatchArr[2];
         }else {
-            return mshoot+":"+gshoot+"_"+ mshootz+":"+gshootz+"_"+ mBallPoss+":"+gBallPoss;
+            return mshoot+":"+gshoot+"_"+ mshootz+":"+gshootz+"_"+ mBallPoss+":"+gBallPoss+"_"+leisuMatchArr[2]+":"+leisuMatchArr[3];
         }
 
 
@@ -170,7 +184,7 @@ public class MatchDataUtils {
         return getMatchDataByLsmid(getLeisuMatchId(getLeisuTeamId(teamName1, teamName2)));
     }
 
-    //射门:客射门_射正:客射正_控球率:客控球率
+    //射门:客射门_射正:客射正_控球率:客控球率_排名:客排名
 /*    //7:10_4:9_54:46
     public static double assessMatchData(String matchData){
         if(StringUtils.isBlank(matchData))return 0;
@@ -847,10 +861,11 @@ public class MatchDataUtils {
 //
 //        System.out.println(1.223*0.990);
 ////        System.out.println((int)(Math.ceil(1.223 * 0.990)));
-/*        logger.info(MatchDataUtils.getLeisuTeamId("艾拉斯克特","Yerevan"));
-        logger.info(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("艾拉斯克特","Yerevan")));
-        logger.info(MatchDataUtils.getMatchDataByLsmid(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("艾拉斯克特","Yerevan"))));*/
-//       // logger.info(getMatchData("登阿姆斯特尔","巴迪博里索夫"));*/
+
+        logger.info(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"));
+        logger.info(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击")));
+        logger.info(MatchDataUtils.getMatchDataByLsmid(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"))));
+      // logger.info(getMatchData("贝特谢安","马卡比艾哈迈德"));
 
 
        // System.out.println( StringUtils.remove(StringUtils.remove(StringUtils.remove(StringUtils.remove(StringUtils.remove(StringUtils.remove(StringUtils.remove(StringUtils.remove(StringUtils.deleteWhitespace("Xanthi FC"), "FC"), "(女)"), "(青年队)"), "（女）"), "（青年队）"),"SC"),"SKU"),"(后备)"));
@@ -959,7 +974,7 @@ public class MatchDataUtils {
         System.out.println(betOdds-oldbet>-0.5);
         System.out.println(betOdds-oldbet>-0.05);
         System.out.println(betOdds-oldbet);*/
-        System.out.println("99_30:30".lastIndexOf("30:30"));
+      //  System.out.println("99_30:30".lastIndexOf("30:30"));
     }
 
 }
