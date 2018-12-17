@@ -222,6 +222,37 @@ public class MatchDataUtils {
 
    }
 
+    public static int compareRanking(MsTyMatch msTyMatch){
+        if(msTyMatch==null)return 100;
+        String[] matchDataArray = msTyMatch.getMatchData().split("_");
+        String[] rankingArr = matchDataArray[3].split(":");
+
+        if(rankingArr[0].equals("0")||rankingArr[1].equals("0")){
+            return 100;
+        }
+
+        String c1 = rankingArr[0].replaceAll("[^(\\u4e00-\\u9fa5)]", "");
+        String c2 = rankingArr[1].replaceAll("[^(\\u4e00-\\u9fa5)]", "");
+
+        if(!c1.equals(c2)){
+            return 100;
+        }
+
+        String n1 = rankingArr[0].replaceAll("[^(0-9)]", "");
+        String n2 = rankingArr[1].replaceAll("[^(0-9)]", "");
+
+        if(n1.equals("0")||n2.equals("0")){
+            return 100;
+        }
+
+
+        if(msTyMatch.getMasterGoalNum()>msTyMatch.getGuestGoalNum()){
+            return Integer.parseInt(n1)-Integer.parseInt(n2);
+        } else {
+            return Integer.parseInt(n2)-Integer.parseInt(n1);
+        }
+    }
+
     //射门:客射门_射正:客射正_控球率:客控球率
     //7:10_4:9_54:46
     public static double assessMatchData(MsTyMatch msTyMatch){
@@ -862,9 +893,9 @@ public class MatchDataUtils {
 //        System.out.println(1.223*0.990);
 ////        System.out.println((int)(Math.ceil(1.223 * 0.990)));
 
-        logger.info(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"));
+/*        logger.info(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"));
         logger.info(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击")));
-        logger.info(MatchDataUtils.getMatchDataByLsmid(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"))));
+        logger.info(MatchDataUtils.getMatchDataByLsmid(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"))));*/
       // logger.info(getMatchData("贝特谢安","马卡比艾哈迈德"));
 
 
@@ -975,6 +1006,17 @@ public class MatchDataUtils {
         System.out.println(betOdds-oldbet>-0.05);
         System.out.println(betOdds-oldbet);*/
       //  System.out.println("99_30:30".lastIndexOf("30:30"));
+
+        /*        logger.info(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"));
+        logger.info(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击")));
+        logger.info(MatchDataUtils.getMatchDataByLsmid(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"))));*/
+
+        String c1 = "2".replaceAll("[^(\\u4e00-\\u9fa5)]", "");
+        String c2 = "完3美丽".replaceAll("[^(\\u4e00-\\u9fa5)]", "");
+        System.out.println("c1:"+c1);
+        System.out.println("c2:"+c2);
+        System.out.println(c1.equals(c2));
+
     }
 
 }
