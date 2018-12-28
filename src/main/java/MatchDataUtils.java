@@ -272,10 +272,10 @@ public class MatchDataUtils {
         //logger.info("mData|gData:"+mData+"|"+gData+"@@"+mData/gData);
 
         if(msTyMatch.getMasterGoalNum()>msTyMatch.getGuestGoalNum()){
-            logger.info("mData|gData:"+mData+"|"+gData+"@@"+mData/gData);
+        //    logger.info("mData|gData:"+mData+"|"+gData+"@@"+mData/gData);
             return mData/gData;
         } else {
-            logger.info("gData/mData:"+gData+"|"+mData+"@@"+gData/mData);
+        //    logger.info("gData/mData:"+gData+"|"+mData+"@@"+gData/mData);
             return gData/mData;
         }
     }
@@ -338,11 +338,11 @@ public class MatchDataUtils {
 
         if(msTyMatch.getMasterGoalNum()>msTyMatch.getGuestGoalNum()){
             Double up = mData - mDataOld -(gData - gDataOld);
-            logger.info("onlyShoot:m-g"+up);
+            //logger.info("onlyShoot:m-g"+up);
             return up.intValue();
         } else {
             Double up = gData - gDataOld -(mData - mDataOld);
-            logger.info("onlyShoot:g-m"+up);
+            //logger.info("onlyShoot:g-m"+up);
             return up.intValue();
         }
     }
@@ -369,11 +369,11 @@ public class MatchDataUtils {
 
         if(msTyMatch.getMasterGoalNum()>msTyMatch.getGuestGoalNum()){
             Double up = mData - mDataOld -(gData - gDataOld);
-            logger.info("onlyShoot:m-g"+up);
+           // logger.info("onlyShoot:m-g"+up);
             return up.intValue();
         } else {
             Double up = gData - gDataOld -(mData - mDataOld);
-            logger.info("onlyShoot:g-m"+up);
+           // logger.info("onlyShoot:g-m"+up);
             return up.intValue();
         }
     }
@@ -392,10 +392,10 @@ public class MatchDataUtils {
 
 
         if(msTyMatch.getMasterGoalNum()>msTyMatch.getGuestGoalNum()){
-            logger.info("onlyShoot: mData|gData:"+mData+"|"+gData+"@@"+mData/gData);
+          //  logger.info("onlyShoot: mData|gData:"+mData+"|"+gData+"@@"+mData/gData);
             return mData/gData;
         } else {
-            logger.info("onlyShoot: gData|mData:"+gData+"|"+mData+"@@"+gData/mData);
+         //   logger.info("onlyShoot: gData|mData:"+gData+"|"+mData+"@@"+gData/mData);
             return gData/mData;
         }
     }
@@ -1005,17 +1005,19 @@ public class MatchDataUtils {
         System.out.println(betOdds-oldbet>-0.5);
         System.out.println(betOdds-oldbet>-0.05);
         System.out.println(betOdds-oldbet);*/
-      //  System.out.println("99_30:30".lastIndexOf("30:30"));
+        System.out.println("99_30:30_5:9".lastIndexOf("30:30"));
 
         /*        logger.info(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"));
         logger.info(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击")));
         logger.info(MatchDataUtils.getMatchDataByLsmid(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"))));*/
+/*
 
         String c1 = "2".replaceAll("[^(\\u4e00-\\u9fa5)]", "");
         String c2 = "完3美丽".replaceAll("[^(\\u4e00-\\u9fa5)]", "");
         System.out.println("c1:"+c1);
         System.out.println("c2:"+c2);
         System.out.println(c1.equals(c2));
+*/
 
     }
 
