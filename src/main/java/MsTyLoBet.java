@@ -820,7 +820,7 @@ public class MsTyLoBet {
                                prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                               && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  betOdds>=1.45)
+                               && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  betOdds>=1.45 || (MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8 &&  betOdds>=1.25))
                                && rankingCom<=-5
                                && betOdds>=0.82
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
