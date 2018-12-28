@@ -807,7 +807,7 @@ public class MsTyLoBet {
                                 prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum()
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                                && MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8
+                                && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8 ||  betOdds>=1.25)
                                 && rankingCom<=2
                                 && betOdds>=0.82
                                 && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
@@ -815,7 +815,20 @@ public class MsTyLoBet {
                                 && prevMsTyMatch.getMatchTime()>=35
                                 ){
                             rankingPolicy = true;
-                            logger.info("jbm test,后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                            logger.info("jbm test,master...后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                       }else if(
+                               prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
+                               && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
+                               && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
+                               && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  betOdds>=1.45)
+                               && rankingCom<=-5
+                               && betOdds>=0.82
+                               && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
+                               && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
+                               && prevMsTyMatch.getMatchTime()>=35
+                               ){
+                           rankingPolicy = true;
+                           logger.info("jbm test,guest...后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                        }else if( betOdds>=0.9
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=0
