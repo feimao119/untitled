@@ -189,7 +189,7 @@ public class MsTyLoBet {
             logger.info("调用http请求成功: " + method.getURI() + ",耗时：" + elapsedTime + "ms, 响应码: " + statusCode);
 
             String result = method.getResponseBodyAsString();
-            logger.info("||MatchNo:"+msTyMatch.getMatchNo()+"|bet result:" + result)
+            logger.info("||MatchNo: "+msTyMatch.getMatchNo()+" |bet result:" + result)
             ;
             logger.info("=========================bet http end=========================");
 
@@ -276,7 +276,7 @@ public class MsTyLoBet {
             logger.info("调用http请求成功: " + method.getURI() + ",耗时：" + elapsedTime + "ms, 响应码: " + statusCode);
 
             String result = method.getResponseBodyAsString();
-            logger.info("||MatchNo:"+msTyMatch.getMatchNo()+"preBet result:" + result)
+            logger.info("||MatchNo: "+msTyMatch.getMatchNo()+" preBet result:" + result)
             ;
             logger.info("=========================preBet http end=========================");
 
@@ -837,9 +837,9 @@ public class MsTyLoBet {
                                && secondPre>=1.3
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
-                               && prevMsTyMatch.getMatchTime()>=35
+                               && prevMsTyMatch.getMatchTime()>=37
                                ){
-                           logger.info("合算比赛,后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                           logger.info("合算比赛,后8分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                            testPolicy = true;
                        }else if(
                                ((prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum() &&rankingCom<=2)
@@ -1111,7 +1111,7 @@ public class MsTyLoBet {
                             //double second = MatchDataUtils.assessMatchData(prevMsTyMatch)* MatchDataUtils.getOdds(prevMsTyMatch);
 
                             if(rankingPolicy){
-                                prevMsTyMatch.setMoney(NumberUtils.toInt(prop.getString("Money"),100)*2);
+                                prevMsTyMatch.setMoney(NumberUtils.toInt(prop.getString("rankingPolicyMoney"),1000));
                                 logger.info(prevMsTyMatch.getMasterTeamName()+"| "+prevMsTyMatch.getMatchNo()+"rankingPolicy——############second："+secondPre+" | "+"############betMoney："+prevMsTyMatch.getMoney());
                             }else {
                                 Long betMoney = (Math.round((NumberUtils.toInt(prop.getString("Money"),100)*secondPre)/100))*100;
@@ -1152,7 +1152,7 @@ public class MsTyLoBet {
                     }
 
                     if(testPolicy == true && NumberUtils.toInt(prop.getString("testPolicy"),1) == 1 ){
-                        if(betMoney_finish>=NumberUtils.toInt(prop.getString("Money"),100)*3){
+                        if(betMoney_finish>=NumberUtils.toInt(prop.getString("testPolicyMoney"),1000)){
                             logger.info("testPolicy已经投注，更新数据不投注:" + prevMsTyMatch.getMasterTeamName() + " | " + prevMsTyMatch.getMatchNo() +" | prevMsTyMatch.getBetMoney(): " + prevMsTyMatch.getBetMoney()
                                     +" | maxMoneyProp:"+maxMoneyProp+" | betMoney_finish:"+betMoney_finish);
 
