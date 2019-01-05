@@ -772,6 +772,7 @@ public class MsTyLoBet {
 
                     boolean testPolicy = false;
                     boolean rankingPolicy = false;
+                    boolean baseCompOnlyShoot = false;
 
                     logger.info("| "+prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo()+" | baseData ："+baseData
                             + "| oldMsTyMatch.getMatchData :"+oldMsTyMatch.getMatchData()
@@ -783,15 +784,23 @@ public class MsTyLoBet {
                             + "| betOdds-baseBetOdds :"+(betOdds-baseBetOdds));
                     if(NumberUtils.toInt(prop.getString("policy"),0)==0){
                        if(   prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum()
-                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
+                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
                                 && rankingCom<=2
                                 && betOdds>=0.82
                                 && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                 && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                 ){
-                            rankingPolicy = true;
-                            logger.info("jbm test,master...shootup, bet.."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                           rankingPolicy = true;
+
+                           if(MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)==0){
+                               baseCompOnlyShoot = true;
+                               logger.info("jbm test,master...base shootup, bet.."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                           }else {
+                               logger.info("jbm test,master...shootup, bet.."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                           }
+
+
                         }else if(   prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
                             && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                             && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
@@ -871,17 +880,23 @@ public class MsTyLoBet {
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1){
                             logger.info("最后10分钟,超高赔率,射门上升，开始投注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                            testPolicy = true;
-                        }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
+                        }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
                                 && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  secondPre>=1.5 || (MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8 && betOdds>=1.5))
                                 && betOdds>=0.85
                                 && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                 && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                 && secondPre>=1.2
-                                && prevMsTyMatch.getMatchTime()>=26
+                                && prevMsTyMatch.getMatchTime()>=27
                                 ){
-                            logger.info("oldBetOdds:"+oldBetOdds+"-canUP oldBetOdds:"+MatchDataUtils.canUp(oldBetOdds)+"|baseBetOdds:"+baseBetOdds+"-canUP baseBetOdds:"+MatchDataUtils.canUp(baseBetOdds)+" | "+prevMsTyMatch.getMatchNo());
-                            logger.info("only second,shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                               if(MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)==0){
+                                   baseCompOnlyShoot = true;
+                                   logger.info("only second,base shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                               }  else {
+                                   logger.info("only second,shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                               }
+                           /// logger.info("oldBetOdds:"+oldBetOdds+"-canUP oldBetOdds:"+MatchDataUtils.canUp(oldBetOdds)+"|baseBetOdds:"+baseBetOdds+"-canUP baseBetOdds:"+MatchDataUtils.canUp(baseBetOdds)+" | "+prevMsTyMatch.getMatchNo());
+
 
                        }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=2
@@ -889,7 +904,7 @@ public class MsTyLoBet {
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                && secondPre>=1.2
-                               && prevMsTyMatch.getMatchTime()>=26
+                               && prevMsTyMatch.getMatchTime()>=27
                                ){
                            logger.info("only second,小波攻势, bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                        }else if(betOdds>=1.5
@@ -899,7 +914,7 @@ public class MsTyLoBet {
                                && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
-                               && prevMsTyMatch.getMatchTime()>=26
+                               && prevMsTyMatch.getMatchTime()>=27
                                ){
                            logger.info("高赔率比赛,射门上升,开始投注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                     } else {
@@ -1159,6 +1174,16 @@ public class MsTyLoBet {
                         this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
                         continue;
 
+                    }
+
+                    if(baseCompOnlyShoot == true){
+                        if(betMoney_finish>=100){
+                            logger.info("baseCompOnlyShoot已经投注，更新数据不投注:" + prevMsTyMatch.getMasterTeamName() + " | " + prevMsTyMatch.getMatchNo() +" | prevMsTyMatch.getBetMoney(): " + prevMsTyMatch.getBetMoney()
+                                    +" | maxMoneyProp:"+maxMoneyProp+" | betMoney_finish:"+betMoney_finish);
+
+                            this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
+                            continue;
+                        }
                     }
 
                     if(testPolicy == true && NumberUtils.toInt(prop.getString("testPolicy"),1) == 1 ){
