@@ -206,13 +206,14 @@ public class MatchDataUtils {
 
        String[] matchDataArray = matchData.split("_");
        String[] shootArr = matchDataArray[0].split(":");
-       String[] shootzArr = matchDataArray[1].split(":");
+     //  String[] shootzArr = matchDataArray[1].split(":");
        //String[] ballpossArr = matchDataArray[2].split(":");
 
+       int mData = NumberUtils.toInt(shootArr[0]);
+       int gData = NumberUtils.toInt(shootArr[1]);
 
-
-       int mData = NumberUtils.toInt(shootArr[0])+ NumberUtils.toInt(shootzArr[0]);
-       int gData = NumberUtils.toInt(shootArr[1])+ NumberUtils.toInt(shootzArr[1]);
+/*       int mData = NumberUtils.toInt(shootArr[0])+ NumberUtils.toInt(shootzArr[0]);
+       int gData = NumberUtils.toInt(shootArr[1])+ NumberUtils.toInt(shootzArr[1]);*/
 
        if(mData+gData<count){
            return false;
@@ -238,8 +239,18 @@ public class MatchDataUtils {
             return 100;
         }
 
-        String n1 = rankingArr[0].replaceAll("[^(0-9)]", "");
-        String n2 = rankingArr[1].replaceAll("[^(0-9)]", "");
+        String tmp1;
+        String tmp2;
+        if(rankingArr[0].indexOf("-")>0 && rankingArr[1].indexOf("-")>0){
+                tmp1 = rankingArr[0].split("-")[1];
+                tmp2 = rankingArr[1].split("-")[1];
+        }else {
+            tmp1 = rankingArr[0];
+            tmp2 = rankingArr[1];
+        }
+
+        String n1 = tmp1.replaceAll("[^(0-9)]", "");
+        String n2 = tmp2.replaceAll("[^(0-9)]", "");
 
         if(n1.equals("0")||n2.equals("0")){
             return 100;
@@ -635,6 +646,7 @@ public class MatchDataUtils {
         if("肯萨斯体育会".equalsIgnoreCase(teamName))return "肯萨斯竞技";
         if("FK 图门".equalsIgnoreCase(teamName))return "FK秋明";
         if("法克尔 沃罗涅日".equalsIgnoreCase(teamName))return "沃罗涅日火炬";
+        if("艾美利亚".equalsIgnoreCase(teamName))return "阿尔梅里亚";
 
         String tmpstr = teamName.replaceAll("\\（(.*?)\\）", "").replaceAll("\\((.*?)\\)", "").trim().replaceAll("[^(\\u4e00-\\u9fa5)]", "").replaceAll("队", "").trim();
 
@@ -676,25 +688,25 @@ public class MatchDataUtils {
 
         double canUP = -0.06;
         if(odds_<1.06){
-            canUP = -0.06;
+            canUP = -0.07;
         }else if(odds_>=1.06&&odds_<1.27){
-            canUP=-0.08;
-        }else if(odds_>=1.27&&odds_<1.57){
             canUP=-0.09;
+        }else if(odds_>=1.27&&odds_<1.57){
+            canUP=-0.10;
         }else if(odds_>=1.57&&odds_<1.78){
-            canUP=-0.11;
+            canUP=-0.12;
         }else if(odds_>=1.78&&odds_<2.00){
-            canUP=-0.13;
+            canUP=-0.14;
         }else if(odds_>=2.00&&odds_<2.25){
-            canUP=-0.15;
+            canUP=-0.16;
         }else if(odds_>=2.25&&odds_<2.48){
-            canUP=-0.18;
+            canUP=-0.19;
         }else if(odds_>=2.48&&odds_<2.70){
-            canUP=-0.24;
+            canUP=-0.25;
         }else if (odds_>=2.7&&odds_<3.10){
-            canUP=-0.32;
+            canUP=-0.33;
         }else if (odds_>=3.10&&odds_<3.50){
-            canUP=-0.40;
+            canUP=-0.41;
         }else if(odds_>=3.50){
             canUP=-0.50;
         }
@@ -1005,7 +1017,7 @@ public class MatchDataUtils {
         System.out.println(betOdds-oldbet>-0.5);
         System.out.println(betOdds-oldbet>-0.05);
         System.out.println(betOdds-oldbet);*/
-        System.out.println("99_30:30_5:9".lastIndexOf("30:30"));
+        System.out.println("99-30:30-5:9".split("-")[2]);
 
         /*        logger.info(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"));
         logger.info(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击")));
