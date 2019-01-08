@@ -908,11 +908,15 @@ public class MsTyLoBet {
                               && secondPre>=1.2
                               && prevMsTyMatch.getMatchTime()>=27
                               ){
-                          if(MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)==0){
+                          if(MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)==0 &&  MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=2){
                               baseCompOnlyShoot = true;
                               logger.info("only second,base shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
-                          }  else {
+                          }  else if (MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>0){
                               logger.info("only second,shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                          } else {
+                              logger.info("compOnlyShoot==0,baseCompOnlyShoot==1不满足投注条件,更新数据!prevMsTyMatch"+prevMsTyMatch);
+                              this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
+                              continue;
                           }
                           /// logger.info("oldBetOdds:"+oldBetOdds+"-canUP oldBetOdds:"+MatchDataUtils.canUp(oldBetOdds)+"|baseBetOdds:"+baseBetOdds+"-canUP baseBetOdds:"+MatchDataUtils.canUp(baseBetOdds)+" | "+prevMsTyMatch.getMatchNo());
 
