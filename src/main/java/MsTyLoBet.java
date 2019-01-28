@@ -782,6 +782,14 @@ public class MsTyLoBet {
                             + "| base compOnlyShoot :"+ MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())
                             + "| betOdds-oldBetOdds :"+(betOdds-oldBetOdds)
                             + "| betOdds-baseBetOdds :"+(betOdds-baseBetOdds));
+
+
+                    if(MatchDataUtils.validateMatchData(baseData,oldMsTyMatch.getMatchData(),prevMsTyMatch.getMatchData())==false){
+                        logger.info("错误的比赛数据,更新数据不投注prevMsTyMatch"+prevMsTyMatch);
+                        this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
+                        continue;
+                    }
+
                     if(NumberUtils.toInt(prop.getString("policy"),0)==0){
                       if(   prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
                             && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
@@ -869,6 +877,8 @@ public class MsTyLoBet {
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                && secondPre>=1.2
+                               && MatchDataUtils.assessMatchDataOnlyShoot(prevMsTyMatch)>=1
+                               && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1
                                && prevMsTyMatch.getMatchTime()>=27
                                ){
                            logger.info("only second,小波攻势, bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
@@ -879,7 +889,7 @@ public class MsTyLoBet {
                                && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
-                               && prevMsTyMatch.getMatchTime()>=27
+                               && prevMsTyMatch.getMatchTime()>=22
                                ){
                            logger.info("高赔率比赛,射门上升,开始投注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
 

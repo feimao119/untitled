@@ -223,6 +223,35 @@ public class MatchDataUtils {
 
    }
 
+    public static boolean validateMatchData(String baseData ,String oldMatchData,String matchData){
+
+        if(StringUtils.isBlank(baseData)
+                || StringUtils.isBlank(oldMatchData)
+                ||StringUtils.isBlank(matchData))return false;
+
+        String[] baseDataArray = baseData.split("_");
+        String[] oldMatchDataArray = oldMatchData.split("_");
+        String[] matchDataArray = matchData.split("_");
+
+
+        if(baseDataArray[3].equals(oldMatchDataArray[3]) && baseDataArray[3].equals(matchDataArray[3])){
+
+        }else {
+            return false;
+        }
+
+        if(baseDataArray[2].equals("30:30") || oldMatchDataArray[2].equals("30:30") || matchDataArray[2].equals("30:30")) {
+            if(baseDataArray[2].equals(oldMatchDataArray[2]) && baseDataArray[2].equals(matchDataArray[2])){
+
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+
+    }
+
     public static int compareRanking(MsTyMatch msTyMatch){
         if(msTyMatch==null)return 100;
         String[] matchDataArray = msTyMatch.getMatchData().split("_");
@@ -647,6 +676,9 @@ public class MatchDataUtils {
         if("FK 图门".equalsIgnoreCase(teamName))return "FK秋明";
         if("法克尔 沃罗涅日".equalsIgnoreCase(teamName))return "沃罗涅日火炬";
         if("艾美利亚".equalsIgnoreCase(teamName))return "阿尔梅里亚";
+        if("沙希尔 SC".equalsIgnoreCase(teamName))return "Al沙希尔";
+        if("阿拉毕 SC".equalsIgnoreCase(teamName))return "阿拉比科威特";
+        if("AA 弗拉门戈 SP U20".equalsIgnoreCase(teamName))return "法林明高(SP)青年队";
 
         String tmpstr = teamName.replaceAll("\\（(.*?)\\）", "").replaceAll("\\((.*?)\\)", "").trim().replaceAll("[^(\\u4e00-\\u9fa5)]", "").replaceAll("队", "").trim();
 
