@@ -773,6 +773,7 @@ public class MsTyLoBet {
                     boolean testPolicy = false;
                     boolean rankingPolicy = false;
                     boolean baseCompOnlyShoot = false;
+                    double startOdds = NumberUtils.toDouble(prop.getString("startOdds"),0.90);
 
                     logger.info("| "+prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo()+" | baseData ："+baseData
                             + "| oldMsTyMatch.getMatchData :"+oldMsTyMatch.getMatchData()
@@ -781,7 +782,8 @@ public class MsTyLoBet {
                             + "| compOnlyShoot :"+ MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)
                             + "| base compOnlyShoot :"+ MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())
                             + "| betOdds-oldBetOdds :"+(betOdds-oldBetOdds)
-                            + "| betOdds-baseBetOdds :"+(betOdds-baseBetOdds));
+                            + "| betOdds-baseBetOdds :"+(betOdds-baseBetOdds)
+                            +" |startOdds: " + startOdds);
 
 
                     if(MatchDataUtils.validateMatchData(baseData,oldMsTyMatch.getMatchData(),prevMsTyMatch.getMatchData())==false){
@@ -794,9 +796,9 @@ public class MsTyLoBet {
                       if(   prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
                             && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                             && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                            && MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.9
+                            && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1
                             && rankingCom<= -5
-                            && betOdds>=0.82
+                            && betOdds>=startOdds
                             && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                             && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                             ){
@@ -806,9 +808,9 @@ public class MsTyLoBet {
                                 prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum()
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                                && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8 ||  betOdds>=1.25)
+                                && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  betOdds>=1.25)
                                 && rankingCom<=2
-                                && betOdds>=0.82
+                                && betOdds>=startOdds
                                 && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                 && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                 && prevMsTyMatch.getMatchTime()>=35
@@ -819,16 +821,16 @@ public class MsTyLoBet {
                                prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                               && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  betOdds>=1.45 || (MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8 &&  betOdds>=1.25))
+                               && (MatchDataUtils.assessMatchData(prevMsTyMatch)>1.2 ||  betOdds>=1.45 || (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 &&  betOdds>=1.25))
                                && rankingCom<=-5
-                               && betOdds>=0.82
+                               && betOdds>=startOdds
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                && prevMsTyMatch.getMatchTime()>=35
                                ){
                            rankingPolicy = true;
                            logger.info("jbm test,guest...后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
-                       }else if( betOdds>=0.9
+                       }else if( betOdds>=startOdds
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=0
                                && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1.2
@@ -836,9 +838,9 @@ public class MsTyLoBet {
                                && secondPre>=1.3
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
-                               && prevMsTyMatch.getMatchTime()>=37
+                               && prevMsTyMatch.getMatchTime()>=35
                                ){
-                           logger.info("合算比赛,后8分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                           logger.info("合算比赛,后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                            testPolicy = true;
                        }else if(
                                ((prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum() &&rankingCom<=2)
@@ -846,11 +848,11 @@ public class MsTyLoBet {
 
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                               && MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8
+                               && MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.9
                               // && MatchDataUtils.assessMatchDataOnlyShoot(prevMsTyMatch)>=0.8
                                // && MatchDataUtils.isOddsScopeUp(prevMsTyMatch, oldMsTyMatch,0.09)
                                && NumberUtils.toInt(prop.getString("noBase"),0)==0
-                               && betOdds>0.83
+                               && betOdds>startOdds
 /*                               && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)*/
                                && betOdds-oldBetOdds>0.09
@@ -873,7 +875,7 @@ public class MsTyLoBet {
 
                        }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=2
-                               && betOdds>=0.85
+                               && betOdds>=startOdds
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                && secondPre>=1.2
@@ -897,9 +899,10 @@ public class MsTyLoBet {
                                   && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                   && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
                                   && rankingCom<=2
-                                  && betOdds>=0.82
+                                  && betOdds>=startOdds
                                   && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                   && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
+                                  && MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.9
                                   ){
                               rankingPolicy = true;
 
@@ -912,7 +915,7 @@ public class MsTyLoBet {
                       }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                               && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
                               && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  secondPre>=1.5 || (MatchDataUtils.assessMatchData(prevMsTyMatch)>=0.8 && betOdds>=1.5))
-                              && betOdds>=0.85
+                              && betOdds>=startOdds
                               && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                               && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                               && secondPre>=1.2
@@ -1094,7 +1097,7 @@ public class MsTyLoBet {
                         }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
                                 && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  secondPre>=2)
-                                && betOdds>=0.83
+                                && betOdds>=0.9
                                 && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                 && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                 && secondPre>=1.2
@@ -1109,7 +1112,7 @@ public class MsTyLoBet {
                        if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
                                 && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  secondPre>=2)
-                                && betOdds>=0.83
+                                && betOdds>=0.9
                                 && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                 && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
                                 && secondPre>=1.2
