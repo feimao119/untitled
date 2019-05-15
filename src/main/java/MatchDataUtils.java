@@ -723,24 +723,30 @@ public class MatchDataUtils {
             canUP = -0.07;
         }else if(odds_>=1.06&&odds_<1.27){
             canUP=-0.09;
-        }else if(odds_>=1.27&&odds_<1.57){
+        }else if(odds_>=1.27&&odds_<1.37){
+            canUP=-0.11;
+        }else if(odds_>=1.37&&odds_<1.47){
+            canUP=-0.12;
+        }else if(odds_>=1.47&&odds_<1.57){
             canUP=-0.13;
-        }else if(odds_>=1.57&&odds_<1.78){
-            canUP=-0.15;
-        }else if(odds_>=1.78&&odds_<2.00){
+        }else if(odds_>=1.57&&odds_<1.67){
+            canUP=-0.14;
+        }else if(odds_>=1.67&&odds_<1.78){
             canUP=-0.17;
+        }else if(odds_>=1.78&&odds_<2.00){
+            canUP=-0.23;
         }else if(odds_>=2.00&&odds_<2.25){
-            canUP=-0.19;
+            canUP=-0.27;
         }else if(odds_>=2.25&&odds_<2.48){
-            canUP=-0.22;
-        }else if(odds_>=2.48&&odds_<2.70){
-            canUP=-0.26;
-        }else if (odds_>=2.7&&odds_<3.10){
             canUP=-0.33;
+        }else if(odds_>=2.48&&odds_<2.70){
+            canUP=-0.39;
+        }else if (odds_>=2.7&&odds_<3.10){
+            canUP=-0.49;
         }else if (odds_>=3.10&&odds_<3.50){
-            canUP=-0.41;
+            canUP=-0.59;
         }else if(odds_>=3.50){
-            canUP=-0.50;
+            canUP=-0.70;
         }
 
         return canUP;
