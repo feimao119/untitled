@@ -21,6 +21,7 @@ public class MsTyLoBet {
     private static final String BetUrl = prop.getString("BetUrl");
     private static final String ListUrl = prop.getString("ListUrl");
     public static final String leisuUrl = prop.getString("leisuUrl");
+    private static final String MsHost = prop.getString("MsHost");
     private static  String saveLanguage = "en";
 
     private static final Logger logger = LoggerFactory.getLogger(MsTyLoBet.class);
@@ -135,9 +136,9 @@ public class MsTyLoBet {
         method.setRequestHeader("Origin", "https://nss.m88ms.com");
         method.setRequestHeader("Referer", "https://nss.m88ms.com/nss/tabmenu.aspx?lid=zh-CN");*/
 
-        method.setRequestHeader("Host", "www.ms88kr.com");
-        method.setRequestHeader("Origin", "https://www.ms88kr.com");
-        method.setRequestHeader("Referer", "https://www.ms88kr.com/Main/Sports/mSports/nss/tabmenu.aspx?lid=zh-CN");
+        method.setRequestHeader("Host", "www."+MsHost+".com");
+        method.setRequestHeader("Origin", "https://www."+MsHost+".com");
+        method.setRequestHeader("Referer", "https://www."+MsHost+".com/Main/Sports/mSports/nss/tabmenu.aspx?lid=zh-CN");
 
         method.setRequestHeader("Upgrade-Insecure-Requests", "1");
         method.setRequestHeader("User-Agent", Agent);
@@ -235,9 +236,9 @@ public class MsTyLoBet {
         method.setRequestHeader("Origin", "https://nss.m88ms.com");
         method.setRequestHeader("Referer", "https://nss.m88ms.com/nss/tabmenu.aspx?lid=zh-CN");*/
 
-        method.setRequestHeader("Host", "www.ms88kr.com");
-        method.setRequestHeader("Origin", "https://www.ms88kr.com");
-        method.setRequestHeader("Referer", "https://www.ms88kr.com/Main/Sports/mSports/nss/tabmenu.aspx?lid=zh-CN");
+        method.setRequestHeader("Host", "www."+MsHost+".com");
+        method.setRequestHeader("Origin", "https://www."+MsHost+".com");
+        method.setRequestHeader("Referer", "https://www."+MsHost+".com/Main/Sports/mSports/nss/tabmenu.aspx?lid=zh-CN");
 
         method.setRequestHeader("Upgrade-Insecure-Requests", "1");
         method.setRequestHeader("User-Agent",Agent);
@@ -319,8 +320,8 @@ public class MsTyLoBet {
 /*        listPostMethod.setRequestHeader("Host", "nss.m88ms.com");
         listPostMethod.setRequestHeader("Origin", "https://nss.m88ms.com");*/
 
-        listPostMethod.setRequestHeader("Host", "www.ms88kr.com");
-        listPostMethod.setRequestHeader("Origin", "https://www.ms88kr.com");
+        listPostMethod.setRequestHeader("Host", "www."+MsHost+".com");
+        listPostMethod.setRequestHeader("Origin", "https://www."+MsHost+".com");
 
 
         /*if("all".equalsIgnoreCase(prop.getString("Language"))){
@@ -338,7 +339,7 @@ public class MsTyLoBet {
         }*/
         //listPostMethod.setRequestHeader("Referer", "https://nss.m88ms.com/nss/main2.aspx?lid=zh-CN&spid=10&spname=Soccer&dt=2");
 
-        listPostMethod.setRequestHeader("Referer", "https://www.ms88kr.com/Main/Sports/mSports/nss/main2.aspx?lid=zh-CN&spid=10&spname=Soccer&dt=2");
+        listPostMethod.setRequestHeader("Referer", "https://www."+MsHost+".com/Main/Sports/mSports/nss/main2.aspx?lid=zh-CN&spid=10&spname=Soccer&dt=2");
 
         listPostMethod.setRequestHeader("Upgrade-Insecure-Requests", "1");
         listPostMethod.setRequestHeader("User-Agent", Agent);
