@@ -79,6 +79,9 @@ public class MsTyMatch {
 
     private Date saveTime;
     private int status;   //默认0，入库1，出库2
+
+    private String repoInfo;
+
     public int getId() {
         return id;
     }
@@ -361,6 +364,14 @@ public class MsTyMatch {
 
     public void setBetMoney(int betMoney) {
         this.betMoney = betMoney;
+    }
+
+    public String getRepoInfo() {
+        return repoInfo;
+    }
+
+    public void setRepoInfo(String repoInfo) {
+        this.repoInfo = repoInfo;
     }
 
     /*    public int getBaseTime() {

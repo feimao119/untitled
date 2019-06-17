@@ -125,7 +125,7 @@ public class MsTyLoBet {
         PostMethod method = new PostMethod(BetUrl);
 
         method.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-        method.setRequestHeader(" Accept-Encoding", "gzip, deflate, br");
+        method.setRequestHeader("Accept-Encoding", "gzip, deflate, br");
         method.setRequestHeader("Accept-Language", "zh-CN,zh;q=0.8");
         method.setRequestHeader("Cache-Control", "max-age=0");
         method.setRequestHeader("Connection", "keep-alive");
@@ -190,8 +190,9 @@ public class MsTyLoBet {
             logger.info("调用http请求成功: " + method.getURI() + ",耗时：" + elapsedTime + "ms, 响应码: " + statusCode);
 
             String result = method.getResponseBodyAsString();
-            logger.info("||MatchNo: "+msTyMatch.getMatchNo()+" |bet result:" + result)
-            ;
+           // logger.info("||MatchNo: "+msTyMatch.getMatchNo()+" |bet result:" + result);
+            logger.info("bet result:" + result);
+
             logger.info("=========================bet http end=========================");
 
             if(result == null){
@@ -805,6 +806,7 @@ public class MsTyLoBet {
                             ){
                             rankingPolicy = true;
                             logger.info("jbm test,guest...shootup, bet.."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                          prevMsTyMatch.setRepoInfo("1.jbm test guest shootup");
                         }else if(
                                 prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum()
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
@@ -818,6 +820,7 @@ public class MsTyLoBet {
                                 ){
                             rankingPolicy = true;
                             logger.info("jbm test,master...后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                          prevMsTyMatch.setRepoInfo("2.jbm test master 后10分钟加注");
                        }else if(
                                prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
@@ -831,6 +834,7 @@ public class MsTyLoBet {
                                ){
                            rankingPolicy = true;
                            logger.info("jbm test,guest...后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                          prevMsTyMatch.setRepoInfo("3.jbm test guest 后10分钟加注");
                        }else if( betOdds>=startOdds
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=0
@@ -843,6 +847,7 @@ public class MsTyLoBet {
                                ){
                            logger.info("合算比赛,后10分钟加注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                            testPolicy = true;
+                          prevMsTyMatch.setRepoInfo("4.合算比赛,后10分钟加注");
                        }else if(
                                ((prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum() &&rankingCom<=2)
                                        ||  (prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum() && rankingCom<= -5))
@@ -865,7 +870,7 @@ public class MsTyLoBet {
                            logger.info("jbm test,数据稳定,赔率大幅提升,开始投注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                            rankingPolicy = true;
                           // testPolicy = true;
-
+                          prevMsTyMatch.setRepoInfo("5.jbm test,数据稳定,赔率大幅提升");
                        }else if( betOdds>=2.0
                                 &&prevMsTyMatch.getMatchTime()>=35
                                 && secondPre>=1
@@ -873,6 +878,7 @@ public class MsTyLoBet {
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1){
                             logger.info("最后10分钟,超高赔率,射门上升，开始投注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                            testPolicy = true;
+                          prevMsTyMatch.setRepoInfo("6.最后10分钟,超高赔率,射门上升");
 
                        }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=2
@@ -885,6 +891,7 @@ public class MsTyLoBet {
                                && prevMsTyMatch.getMatchTime()>=27
                                ){
                            logger.info("only second,小波攻势, bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                          prevMsTyMatch.setRepoInfo("7.only second,小波攻势");
                        }else if(betOdds>=1.5
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                                && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
@@ -895,7 +902,7 @@ public class MsTyLoBet {
                                && prevMsTyMatch.getMatchTime()>=22
                                ){
                            logger.info("高赔率比赛,射门上升,开始投注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
-
+                          prevMsTyMatch.setRepoInfo("8.高赔率比赛,射门上升");
                        }else if(  prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum()
                                   && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                   && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
@@ -910,8 +917,10 @@ public class MsTyLoBet {
                               if(MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)==0){
                                   baseCompOnlyShoot = true;
                                   logger.info("jbm test,master...base shootup, bet.."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                                  prevMsTyMatch.setRepoInfo("9.jbm test,master base shootup");
                               }else {
                                   logger.info("jbm test,master...shootup, bet.."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                                  prevMsTyMatch.setRepoInfo("10.jbm test,master shootup");
                               }
                       }else if( MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                               && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
@@ -925,8 +934,10 @@ public class MsTyLoBet {
                           if(MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)==0 &&  MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=2){
                               baseCompOnlyShoot = true;
                               logger.info("only second,base shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                              prevMsTyMatch.setRepoInfo("11.only second,base shoot up");
                           }  else if (MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>0){
                               logger.info("only second,shoot up,bet..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
+                              prevMsTyMatch.setRepoInfo("12.only second,shoot up");
                           } else {
                               logger.info("compOnlyShoot==0,baseCompOnlyShoot==1不满足投注条件,更新数据!prevMsTyMatch"+prevMsTyMatch);
                               this.updataMsTyMatch(oldMsTyMatch,msTyMatch);
@@ -1398,7 +1409,7 @@ public class MsTyLoBet {
                                 logger.info("| "+prevMsTyMatch.getMatchNo()+" |投注成功0："+betResult);
                                 prevMsTyMatch.setBetMoney(zbBetMoney);
                             }else if(MatchDataUtils.parseBetResultCode(betResult)==401){
-                                logger.info("| "+prevMsTyMatch.getMatchNo()+" |投注成功："+betResult);
+                                logger.info("| "+prevMsTyMatch.getMatchNo()+" |投注成功："+betResult+"||"+prevMsTyMatch.getRepoInfo());
                                 prevMsTyMatch.setBetMoney(zbBetMoney);
                             }else if(MatchDataUtils.parseBetResultCode(betResult)==-404){
                                 logger.info("| "+prevMsTyMatch.getMatchNo()+" |钱不够，休息5分钟："+betResult);
