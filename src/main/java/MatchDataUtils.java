@@ -151,15 +151,33 @@ public class MatchDataUtils {
         String leisuMatchId = leisuMatchArr[0];
         if(StringUtils.isBlank(leisuMatchId)) return null;
 
-        String str = LeisuHttphelp.getRequest("https://api.leisu.com/api/eventdata?scheduleid="+leisuMatchId+"&type=event");
+      /*  String str = LeisuHttphelp.getRequest("https://api.leisu.com/api/eventdata?scheduleid="+leisuMatchId+"&type=event");
         if(StringUtils.isBlank(str) || str.indexOf("\\u5c04\\u95e8")==-1 || str.indexOf("\\u5c04\\u6b63")==-1 ){
             logger.info("数据不全：https://api.leisu.com/api/eventdata?scheduleid="+leisuMatchId+"&type=event|"+str);
             return null;
+        }*/
+
+        //https://api.leisu.com/api/v2/match/stats?id=2578636  新
+        String str = LeisuHttphelp.getRequest("https://api.leisu.com/api/v2/match/stats?id="+leisuMatchId);
+        if(StringUtils.isBlank(str) || str.indexOf(":21,")==-1 || str.indexOf(":22,")==-1 ){
+            logger.info("数据不全：https://api.leisu.com/api/v2/match/stats?id="+leisuMatchId+"|"+str);
+            return null;
         }
-        String mshoot = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,"\\u5c04\\u95e8"),"HomeData\":\""),"\",\"AwayData");
-        String gshoot = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,"\\u5c04\\u95e8"),"AwayData\":\""),"\"}");
-        String mshootz = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,"\\u5c04\\u6b63"),"HomeData\":\""),"\",\"AwayData");
-        String gshootz = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,"\\u5c04\\u6b63"),"AwayData\":\""),"\"}");
+       // {"code":0,"data":{"stats":[{"type":2,"home":0,"away":1},{"type":3,"home":0,"away":0},{"type":4,"home":0,"away":0},{"type":8,"home":0,"away":0},{"type":21,"home":4,"away":3},{"type":22,"home":1,"away":3}],
+       // "incidents":[{"type":1,"second":540,"time":"9","belong":2,"player_name":"Bosnjak"},{"type":1,"second":2580,"time":"43","belong":1},{"type":1,"second":2640,"time":"44","belong":2}]}}
+/*        String mshoot = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":21,"),"home\":"),",\"away");
+        String gshoot = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":21,"),"away\":"),"}");
+        String mshootz = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":22,"),"home\":"),",\"away");
+        String gshootz = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":22,"),"away\":"),"}");*/
+
+
+        String mshootp = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":22,"),"home\":"),",\"away");
+        String gshootp = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":22,"),"away\":"),"}");
+        String mshootz = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":21,"),"home\":"),",\"away");
+        String gshootz = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,":21,"),"away\":"),"}");
+
+        String mshoot =  (NumberUtils.toInt(mshootp,0)+ NumberUtils.toInt(mshootz,0))+"";
+        String gshoot = (NumberUtils.toInt(gshootp,0)+ NumberUtils.toInt(gshootz,0))+"";
 
         String mBallPoss = "30";
         String gBallPoss = "30";
@@ -168,7 +186,7 @@ public class MatchDataUtils {
             mBallPoss = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,"\\u63a7\\u7403\\u7387"),"HomeData\":\""),"%\",\"AwayData");
             gBallPoss = StringUtils.substringBefore(StringUtils.substringAfter(StringUtils.substringAfter(str,"\\u63a7\\u7403\\u7387"),"AwayData\":\""),"%\"}");
         } else {
-            logger.info("缺少控球率，补全："+str);
+            //logger.info("缺少控球率，补全："+str);
         }
 
         if("y".equals(leisuMatchArr[1])){
@@ -1055,7 +1073,7 @@ public class MatchDataUtils {
         System.out.println(betOdds-oldbet>-0.5);
         System.out.println(betOdds-oldbet>-0.05);
         System.out.println(betOdds-oldbet);*/
-        System.out.println("99-30:30-5:9".split("-")[2]);
+        //System.out.println("99-30:30-5:9".split("-")[2]);
 
         /*        logger.info(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击"));
         logger.info(MatchDataUtils.getLeisuMatchId(MatchDataUtils.getLeisuTeamId("贝特谢安","鲁伏射击")));
