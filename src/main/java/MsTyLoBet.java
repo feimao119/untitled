@@ -8,7 +8,11 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 public class MsTyLoBet {
 
@@ -189,7 +193,20 @@ public class MsTyLoBet {
 
             logger.info("调用http请求成功: " + method.getURI() + ",耗时：" + elapsedTime + "ms, 响应码: " + statusCode);
 
-            String result = method.getResponseBodyAsString();
+            InputStream is = method.getResponseBodyAsStream();
+            GZIPInputStream gis = new GZIPInputStream(is);
+            BufferedReader br = new BufferedReader(new InputStreamReader(gis,Charset));
+            StringBuffer stringBuffer = new StringBuffer();
+            String str= "";
+            while((str = br.readLine()) != null){
+                stringBuffer .append(str );
+            }
+            logger.info("bet http result:" + stringBuffer.toString());
+            logger.info("========================= bet http end=========================");
+            return stringBuffer.toString();
+
+
+        /*    String result = method.getResponseBodyAsString();
            // logger.info("||MatchNo: "+msTyMatch.getMatchNo()+" |bet result:" + result);
             logger.info("bet result:" + result);
 
@@ -199,7 +216,7 @@ public class MsTyLoBet {
                 return null;
             } else {
                 return result;
-            }
+            }     */
 
         } catch (Exception ex) {
             statusCode = 499;
@@ -276,6 +293,19 @@ public class MsTyLoBet {
             elapsedTime = System.currentTimeMillis() - startTime;
 
             logger.info("调用http请求成功: " + method.getURI() + ",耗时：" + elapsedTime + "ms, 响应码: " + statusCode);
+
+/*            InputStream is = method.getResponseBodyAsStream();
+            GZIPInputStream gis = new GZIPInputStream(is);
+            BufferedReader br = new BufferedReader(new InputStreamReader(gis,Charset));
+            StringBuffer stringBuffer = new StringBuffer();
+            String str= "";
+            while((str = br.readLine()) != null){
+                stringBuffer .append(str );
+            }
+            logger.info("preBet result:" + stringBuffer.toString());
+            logger.info("========================= preBet http end=========================");
+            return stringBuffer.toString();*/
+
 
             String result = method.getResponseBodyAsString();
             logger.info("||MatchNo: "+msTyMatch.getMatchNo()+" preBet result:" + result)
@@ -390,6 +420,18 @@ public class MsTyLoBet {
             elapsedTime = System.currentTimeMillis() - startTime;
 
             logger.info("调用http请求成功: " + listPostMethod.getURI() + ",耗时：" + elapsedTime + "ms, 响应码: " + statusCode);
+
+/*            InputStream is = listPostMethod.getResponseBodyAsStream();
+            GZIPInputStream gis = new GZIPInputStream(is);
+            BufferedReader br = new BufferedReader(new InputStreamReader(gis,Charset));
+            StringBuffer stringBuffer = new StringBuffer();
+            String str= "";
+            while((str = br.readLine()) != null){
+                stringBuffer .append(str );
+            }
+            logger.info("getMatchListStr result Length:" + stringBuffer.toString().length());
+            logger.info("========================= getMatchListStr http end=========================");
+            return stringBuffer.toString();*/
 
             String result = listPostMethod.getResponseBodyAsString();
 
@@ -1187,11 +1229,14 @@ public class MsTyLoBet {
 
                         }*/
 
-                    if(NumberUtils.toInt(prop.getString("testPolicy"),1) == 1 && prevMsTyMatch.getMatchData().lastIndexOf("30:30")>6){
+                    /*
+                    leisu改版暂时没有控球率20160618
+                     */
+                /*    if(NumberUtils.toInt(prop.getString("testPolicy"),1) == 1 && prevMsTyMatch.getMatchData().lastIndexOf("30:30")>6){
                         prevMsTyMatch.setMoney(prevMsTyMatch.getMoney()/2);
                         logger.info("30:30 is true money/2:" + prevMsTyMatch.getMasterTeamName() + " | " + prevMsTyMatch.getMatchNo() +" | money:"+prevMsTyMatch.getMoney());
 
-                    }
+                    }*/
 
                     //betMoney
                     int betMoney_finish =  MsTyMatchDao.getInstance().getBetMoney(prevMsTyMatch.getMatchNo(),prevMsTyMatch.getMatchStep());

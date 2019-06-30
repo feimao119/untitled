@@ -34,7 +34,8 @@ public class LeisuHttphelp {
       //  httpget.setHeader("Cookie","Hm_lvt_63b82ac6d9948bad5e14b1398610939a=1532272589,1532273195,1532679810,1532968602; aliyungf_tc=AQAAAJLmDivDfwgADY1LahgWNVlnfuvb; acw_tc=AQAAAOQnAh/4awgADY1LajqRD9kgR1tq; public_token=leisu_test; Hm_lpvt_63b82ac6d9948bad5e14b1398610939a=1532974389; SERVERID=b8793da2f445eec3bc2df0ef269be0ec|1532974760|1532968602");
        // httpget.setHeader("Cookie","Hm_lvt_63b82ac6d9948bad5e14b1398610939a=1532177445,1533998431; aliyungf_tc=AQAAAPwzdlprAwMADY1LajknYb2/E2vF; acw_tc=AQAAAKyDZA/HbwQADY1Lavu5Di4dYycB; acw_sc__=5b6f241f9e21caf67d8cfcb292b5887221ccb0ef");
        // httpget.setHeader("Cookie","aliyungf_tc=AQAAAB9ibGEjFgcAH6lLapLy0kGv5LA7; Hm_lvt_63b82ac6d9948bad5e14b1398610939a=1532177445,1533998431,1534010418,1534018451; Hm_lpvt_63b82ac6d9948bad5e14b1398610939a=1534018451; acw_tc=AQAAACRnoQTecg4AH6lLanRJXQfeK0gs; public_token=leisu_test; SERVERID=b8793da2f445eec3bc2df0ef269be0ec|1534018457|1534018451");
-        httpget.setHeader("Cookie","remember-me=blX%2B4s%2Ba5FLgR%2BTEa81%2BDDNBsM2bmUIBJkThqFcGrIrI7f9Dzz27KKyAauOO%2FrN6ZM2icAJ9POA9SFc2SspLPQ%3D%3D; acw_tc=AQAAABiurlrgwgoA9RYMamcc/LvDSCtP; Hm_lvt_63b82ac6d9948bad5e14b1398610939a=1534575560,1534701521,1534839977,1534926376; Hm_lpvt_63b82ac6d9948bad5e14b1398610939a=1534926376; aliyungf_tc=AQAAAMRsXAtgbg0AmWBvfa7W4vFLn7Ed; PHPSESSID=ivgrn1anve622s04bcer8ulgk1; SERVERID=b8793da2f445eec3bc2df0ef269be0ec|1534926384|1534926382; public_token=leisu_test");
+        //httpget.setHeader("Cookie","remember-me=blX%2B4s%2Ba5FLgR%2BTEa81%2BDDNBsM2bmUIBJkThqFcGrIrI7f9Dzz27KKyAauOO%2FrN6ZM2icAJ9POA9SFc2SspLPQ%3D%3D; acw_tc=AQAAABiurlrgwgoA9RYMamcc/LvDSCtP; Hm_lvt_63b82ac6d9948bad5e14b1398610939a=1534575560,1534701521,1534839977,1534926376; Hm_lpvt_63b82ac6d9948bad5e14b1398610939a=1534926376; aliyungf_tc=AQAAAMRsXAtgbg0AmWBvfa7W4vFLn7Ed; PHPSESSID=ivgrn1anve622s04bcer8ulgk1; SERVERID=b8793da2f445eec3bc2df0ef269be0ec|1534926384|1534926382; public_token=leisu_test");
+        httpget.setHeader("Cookie","acw_tc=2f61f26315598513558721506e4e29dd141459d8f377fefa86454737afddf7; LWT=Kt6DvQg9dYMLvak2GGABg9vx6stimgKMp7lTyrYCqSGixxIeie7PKSQwgFuf0rv2Ya09fCTG9E8X4KvWpR3h%2Bxs8BZe1orUfrYLk6qfppA3DbqAinX6JivsY5uyAgBd2; PHPSESSID=kepqnqlr10e693dfcskf7pda37; Hm_lvt_63b82ac6d9948bad5e14b1398610939a=1560624253,1560663770,1560769462,1560783235; public_token=abc; Hm_lpvt_63b82ac6d9948bad5e14b1398610939a=1560783370; SERVERID=4ab2f7c19b72630dd03ede01228e3e61|1560783763|1560783314");
         if(url.equalsIgnoreCase(MsTyLoBet.leisuUrl)){
 
             if("https://free.leisu.com/".equalsIgnoreCase(url)){
@@ -139,9 +140,9 @@ public class LeisuHttphelp {
     public static void main(String[] args) {
            // String a = getRequest("https://free.leisu.com/");
 
-           //String b = getRequest("https://api.leisu.com/api/eventdata?scheduleid=2529413&type=event");
-            System.out.println(getRequest2());
-
+           String b = getRequest("https://api.leisu.com/api/v2/match/stats?id=2578636");
+            //System.out.println(getRequest2());
+        System.out.println(b);
       //  System.out.println(getRequest("https://api.leisu.com/api/eventdata?scheduleid=2529413&type=event"));
 
     }
