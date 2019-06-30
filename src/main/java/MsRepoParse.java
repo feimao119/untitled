@@ -3,14 +3,13 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -169,9 +168,6 @@ public class MsRepoParse {
             }
         }
 
-       String repoDataList = this.getRepoData(frdate,todate);
-        //String repoDataList = prop.getString("RepoTest");
-
         int wno1 = 0; //1.jbm test guest shootup
         int wno2 = 0; //2.jbm test master 后10分钟加注
         int wno3 = 0; //3.jbm test guest 后10分钟加注
@@ -198,96 +194,114 @@ public class MsRepoParse {
         int lno11 = 0; //11.only second,base shoot up
         int lno12 = 0; //12.only second,shoot up
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 
-        String substring = StringUtils.substringBetween(repoDataList, "d=[", "\"];");
-        String[] repoDataArr = substring.split("U\\^");
-        for (int i=1; i<repoDataArr.length;i++){
-            String line1= repoDataArr[i];// 单号；比赛id；胜负
-            System.out.println("============"+i+"============");
-            System.out.println(line1);
+        Date frdated = DateUtils.parseDate(frdate, "yyyyMMdd");
+        //Date todated = DateUtils.parseDate(todate,"yyyyMMdd");
 
-            String[] s1 = line1.split("\\^");
+        Date frdatedNext = frdated;
 
-            String isWin = s1[22];
-            if(isWin.equals("D"))continue;
+        String frdatedNextStr = simpleDateFormat.format(frdatedNext);
 
-            String dateStr = s1[2].substring(0,8);
-            String dateStrOv = dateStr.substring(0,4)+"-"+ dateStr.substring(4,6)+"-"+dateStr.substring(6,8);
-            System.out.println("dateStrOv:"+dateStrOv);
+        while (!frdatedNextStr.equals(todate)){
+            System.out.println("===================="+frdatedNextStr+"======================");
 
-            String betNo = s1[0].split("\\|")[0];
-            String matchNo = s1[30];
-            String leagueName = s1[3];
-           // String isWin = s1[22];
-            String betMoney =  s1[7];
-            String winMoney =  s1[20];
-            String isHalf =  s1[4];
-            String betScore = s1[11]+"-"+s1[12];
-            String halfScore = s1[23]+"-"+s1[24];
-            String overScore = s1[25]+"-"+s1[26];
+            String repoDataList = this.getRepoData(frdatedNextStr,todate);
+            //String repoDataList = prop.getString("RepoTest");
 
-            String repoStr =  betNo + "|" + matchNo + "|" + leagueName + "|" + isHalf + "|" + betScore + "|" + halfScore + "|" + overScore + "|" + betMoney + "|" + winMoney + "|" + isWin ;
-            System.out.println(repoStr);
+            String substring = StringUtils.substringBetween(repoDataList, "d=[", "\"];");
+            String[] repoDataArr = substring.split("U\\^");
+            for (int i=1; i<repoDataArr.length;i++){
+                String line1= repoDataArr[i];// 单号；比赛id；胜负
+                System.out.println("============"+i+"============");
+                System.out.println(line1);
 
-            Process proc = null;
-            String[] cmd = { "cmd", "/c", "grep "+matchNo+" E:\\work\\mslog\\msbet.log."+dateStrOv+" > E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+matchNo+".log" };
-            proc = Runtime.getRuntime().exec(cmd);
-            Thread.sleep(2000);
-            Runtime.getRuntime().exec(new String[]{"cmd", "/c", "grep " + betNo + " E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+matchNo+".log > E:\\work\\mslog\\tmp88.log"});
-            Thread.sleep(2000);
-            BufferedReader in = new BufferedReader(new FileReader("E:\\work\\mslog\\tmp88.log"));
-            String tmp = in.readLine();
-            in.close();
-            System.out.println(tmp);
-            String tmp1 = tmp.split("\\|\\|")[1];
-            System.out.println(tmp1);
-            int noInt = NumberUtils.toInt(tmp1.split("\\.")[0],0);
-            System.out.println(noInt);
+                String[] s1 = line1.split("\\^");
 
-            switch(noInt){
-                case 1:
-                    int ii1 = isWin.equals("W")? wno1++ : lno1++;
-                    break;
-                case 2:
-                    int ii2 = isWin.equals("W")? wno2++ : lno2++;
-                    break;
-                case 3:
-                    int ii3 = isWin.equals("W")? wno3++ : lno3++;
-                    break;
-                case 4:
-                    int ii4 = isWin.equals("W")? wno4++ : lno4++;
-                    break;
-                case 5:
-                    int ii5 = isWin.equals("W")? wno5++ : lno5++;
-                    break;
-                case 6:
-                    int ii6 = isWin.equals("W")? wno6++ : lno6++;
-                    break;
-                case 7:
-                    int ii7 = isWin.equals("W")? wno7++ : lno7++;
-                    break;
-                case 8:
-                    int ii8 = isWin.equals("W")? wno8++ : lno8++;
-                    break;
-                case 9:
-                    int ii9 = isWin.equals("W")? wno9++ : lno9++;
-                    break;
-                case 10:
-                    int ii10 = isWin.equals("W")? wno10++ : lno10++;
-                    break;
-                case 11:
-                    int ii11 = isWin.equals("W")? wno11++ : lno11++;
-                    break;
-                case 12:
-                    int ii12 = isWin.equals("W")? wno12++ : lno12++;
-                    break;
-                default:
-                    System.out.println("error noInt:"+noInt);break;
+                String isWin = s1[22];
+                if(isWin.equals("D"))continue;
+
+                String dateStr = s1[2].substring(0,8);
+                String dateStrOv = dateStr.substring(0,4)+"-"+ dateStr.substring(4,6)+"-"+dateStr.substring(6,8);
+                System.out.println("dateStrOv:"+dateStrOv);
+
+                String betNo = s1[0].split("\\|")[0];
+                String matchNo = s1[30];
+                String leagueName = s1[3];
+               // String isWin = s1[22];
+                String betMoney =  s1[7];
+                String winMoney =  s1[20];
+                String isHalf =  s1[4];
+                String betScore = s1[11]+"-"+s1[12];
+                String halfScore = s1[23]+"-"+s1[24];
+                String overScore = s1[25]+"-"+s1[26];
+
+                String repoStr =  betNo + "|" + matchNo + "|" + leagueName + "|" + isHalf + "|" + betScore + "|" + halfScore + "|" + overScore + "|" + betMoney + "|" + winMoney + "|" + isWin ;
+                System.out.println(repoStr);
+
+                Process proc = null;
+                String[] cmd = { "cmd", "/c", "grep "+matchNo+" E:\\work\\mslog\\msbet.log."+dateStrOv+" > E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+matchNo+".log" };
+                proc = Runtime.getRuntime().exec(cmd);
+                Thread.sleep(300);
+                Runtime.getRuntime().exec(new String[]{"cmd", "/c", "grep " + betNo + " E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+matchNo+".log > E:\\work\\mslog\\tmp88.log"});
+                Thread.sleep(300);
+                BufferedReader in = new BufferedReader(new FileReader("E:\\work\\mslog\\tmp88.log"));
+                String tmp = in.readLine();
+                in.close();
+                //System.out.println(tmp);
+                String tmp1 = tmp.split("\\|\\|")[1];
+                //System.out.println(tmp1);
+                int noInt = NumberUtils.toInt(tmp1.split("\\.")[0],0);
+                //System.out.println(noInt);
+
+                switch(noInt){
+                    case 1:
+                        int ii1 = isWin.equals("W")? wno1++ : lno1++;
+                        break;
+                    case 2:
+                        int ii2 = isWin.equals("W")? wno2++ : lno2++;
+                        break;
+                    case 3:
+                        int ii3 = isWin.equals("W")? wno3++ : lno3++;
+                        break;
+                    case 4:
+                        int ii4 = isWin.equals("W")? wno4++ : lno4++;
+                        break;
+                    case 5:
+                        int ii5 = isWin.equals("W")? wno5++ : lno5++;
+                        break;
+                    case 6:
+                        int ii6 = isWin.equals("W")? wno6++ : lno6++;
+                        break;
+                    case 7:
+                        int ii7 = isWin.equals("W")? wno7++ : lno7++;
+                        break;
+                    case 8:
+                        int ii8 = isWin.equals("W")? wno8++ : lno8++;
+                        break;
+                    case 9:
+                        int ii9 = isWin.equals("W")? wno9++ : lno9++;
+                        break;
+                    case 10:
+                        int ii10 = isWin.equals("W")? wno10++ : lno10++;
+                        break;
+                    case 11:
+                        int ii11 = isWin.equals("W")? wno11++ : lno11++;
+                        break;
+                    case 12:
+                        int ii12 = isWin.equals("W")? wno12++ : lno12++;
+                        break;
+                    default:
+                        System.out.println("error noInt:"+noInt);break;
+                }
+    /*            for (int j=0; j<s1.length; j++){
+                    System.out.println(j+":"+s1[j]);
+                }*/
+
             }
-/*            for (int j=0; j<s1.length; j++){
-                System.out.println(j+":"+s1[j]);
-            }*/
 
+            frdatedNext = DateUtils.addDays(frdatedNext,1);
+            frdatedNextStr = simpleDateFormat.format(frdatedNext);
         }
 
         StringBuilder repoOutStr = new StringBuilder();
@@ -315,11 +329,18 @@ public class MsRepoParse {
             /*String frdate = args[0]!=null?args[0]:"6/12/2019";
             String todate = args[1]!=null?args[1]:"6/13/2019";*/
 
-        MsRepoParse msRepoParse = new MsRepoParse();
+/*        MsRepoParse msRepoParse = new MsRepoParse();
        // System.out.print(msRepoParse.getRepoData("20190620","20190623"));
         msRepoParse.buildRepo("20190626","20190627");
         msRepoParse.buildRepo("20190627","20190628");
-        msRepoParse.buildRepo("20190628","20190629");
+        msRepoParse.buildRepo("20190628","20190629");*/
+/*        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMM-dd");
+        Date frdated = DateUtils.parseDate("20190812","yyyyMMdd");
+        String nextDateStr = simpleDateFormat.format(frdated);
+        System.out.println(frdated.toString());
+        System.out.println(nextDateStr);*/
+        MsRepoParse msRepoParse = new MsRepoParse();
+        msRepoParse.buildRepo("20190620","20190629");
 
     }
 
