@@ -840,7 +840,8 @@ public class MsTyLoBet {
                       if(   prevMsTyMatch.getMasterGoalNum()<prevMsTyMatch.getGuestGoalNum()
                             && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=1
                             && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                            && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1
+                            && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1.1
+                            && MatchDataUtils.assessMatchDataOnlyShoot(prevMsTyMatch)>=1.2 //20190712
                             && rankingCom<= -5
                             && betOdds>=startOdds
                             && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
@@ -853,7 +854,8 @@ public class MsTyLoBet {
                                 prevMsTyMatch.getMasterGoalNum()>prevMsTyMatch.getGuestGoalNum()
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch)>=0
                                 && MatchDataUtils.compOnlyShoot(prevMsTyMatch,oldMsTyMatch.getBaseMatchData())>=1
-                                && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  betOdds>=1.25)
+                               // && (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 ||  betOdds>=1.25)          低胜率9019712替换成同guest
+                                && (MatchDataUtils.assessMatchData(prevMsTyMatch)>1.2 ||  betOdds>=1.45 || (MatchDataUtils.assessMatchData(prevMsTyMatch)>=1 &&  betOdds>=1.25))
                                 && rankingCom<=2
                                 && betOdds>=startOdds
                                 && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
@@ -941,7 +943,7 @@ public class MsTyLoBet {
                                && MatchDataUtils.assessMatchData(prevMsTyMatch)>=1
                                && betOdds-oldBetOdds>=MatchDataUtils.canUp(oldBetOdds)
                                && betOdds-baseBetOdds>=MatchDataUtils.canUp(baseBetOdds)
-                               && prevMsTyMatch.getMatchTime()>=22
+                               && prevMsTyMatch.getMatchTime()>=27  //20160712 22-27
                                ){
                            logger.info("高赔率比赛,射门上升,开始投注..."+ prevMsTyMatch.getMasterTeamName()+" | "+prevMsTyMatch.getMatchNo());
                           prevMsTyMatch.setRepoInfo("8.高赔率比赛,射门上升");
