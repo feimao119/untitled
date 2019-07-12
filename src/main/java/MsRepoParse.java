@@ -253,10 +253,10 @@ public class MsRepoParse {
                 }
 
                 Process proc = null;
-                String[] cmd = { "cmd", "/c", "grep "+matchNo+" E:\\work\\mslog\\msbet.log."+dateStrOv+" > E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+matchNo+".log" };
+                String[] cmd = { "cmd", "/c", "grep "+matchNo+" E:\\work\\mslog\\msbet.log."+dateStrOv+" > E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+betNo+".log" };
                 proc = Runtime.getRuntime().exec(cmd);
                 Thread.sleep(300);
-                Runtime.getRuntime().exec(new String[]{"cmd", "/c", "grep " + betNo + " E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+matchNo+".log > E:\\work\\mslog\\tmp88.log"});
+                Runtime.getRuntime().exec(new String[]{"cmd", "/c", "grep " + betNo + " E:\\work\\mslog\\"+frdate+"-"+todate+"\\"+betNo+".log > E:\\work\\mslog\\tmp88.log"});
                 Thread.sleep(300);
                 BufferedReader in = new BufferedReader(new FileReader("E:\\work\\mslog\\tmp88.log"));
                 String tmp = in.readLine();
