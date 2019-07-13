@@ -261,6 +261,10 @@ public class MsRepoParse {
                 BufferedReader in = new BufferedReader(new FileReader("E:\\work\\mslog\\tmp88.log"));
                 String tmp = in.readLine();
                 in.close();
+                if(tmp==null || StringUtils.isBlank(tmp)){
+                    System.out.println("=="+ repoStr +"======== continue ");
+                    continue;
+                }
                 //System.out.println(tmp);
                 String tmp1 = tmp.split("\\|\\|")[1];
                 //System.out.println(tmp1);
